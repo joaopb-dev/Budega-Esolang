@@ -146,10 +146,10 @@ um inteirinho de opcao = 2;
 escolhe_ai (opcao) {
     causo 1:
         berra("Pegar farinha.\n");
-        arreda;
+        desmantela;
     causo 2:
         berra("Pegar café.\n");
-        arreda;
+        desmantela;
     se_num_tiver:
         berra("Essa budega não tem não.\n");
 }
@@ -208,8 +208,8 @@ pra_cada (um inteirinho de nota em notas) {
 
 | Controle | Palavra-chave |
 |---|---|
-| Continuar | `passa_reto` |
-| Quebrar | `arreda` |
+| Continuar | `arrocha` |
+| Quebrar | `desmantela` |
 | Retornar | `devolve` |
 
 Exemplo:
@@ -217,11 +217,11 @@ Exemplo:
 ```budega
 pra (um inteirinho de i = 0; i < 10; i = i + 1) {
     se_der (i == 3) {
-        passa_reto;
+        arrocha;
     }
 
     se_der (i == 8) {
-        arreda;
+        desmantela;
     }
 
     berra("%d\n", i);
@@ -236,7 +236,7 @@ Funções são declaradas com a palavra-chave `peleja`, indicando uma tarefa que
 |---|---|
 | Declarar função | `peleja` |
 | Retornar valor | `devolve` |
-| Função principal | `budega_principal` |
+| Função principal | `abrir_budega` |
 | Sem retorno | `nadinha` |
 
 Exemplo:
@@ -251,10 +251,10 @@ peleja nadinha mostra_resultado(um inteirinho de valor) {
 }
 ```
 
-A função principal do programa deve se chamar `budega_principal`.
+A função principal do programa deve se chamar `abrir_budega`.
 
 ```budega
-peleja inteirinho budega_principal() {
+peleja inteirinho abrir_budega() {
     um inteirinho de resultado = soma(2, 3);
     mostra_resultado(resultado);
 
@@ -274,7 +274,7 @@ As funções de entrada e saída seguem uma lógica parecida com `printf` e `sca
 Exemplo:
 
 ```budega
-peleja inteirinho budega_principal() {
+peleja inteirinho abrir_budega() {
     um inteirinho de idade;
 
     berra("Diga tua idade: ");
@@ -310,7 +310,7 @@ peleja inteirinho maior_valor(um inteirinho de a, um inteirinho de b) {
     }
 }
 
-peleja inteirinho budega_principal() {
+peleja inteirinho abrir_budega() {
     um inteirinho de x;
     um inteirinho de y;
 
@@ -322,7 +322,7 @@ peleja inteirinho budega_principal() {
     escolhe_ai (maior) {
         causo 0:
             berra("Oxente, deu zero.\n");
-            arreda;
+            desmantela;
         se_num_tiver:
             berra("O maior valor foi %d.\n", maior);
     }
@@ -355,8 +355,8 @@ peleja inteirinho budega_principal() {
 | `do` | `faz_ai` |
 | `for` | `pra` |
 | `foreach` | `pra_cada` |
-| `continue` | `passa_reto` |
-| `break` | `arreda` |
+| `continue` | `arrocha` |
+| `break` | `desmantela` |
 | `return` | `devolve` |
 | função | `peleja` |
 | `void` | `nadinha` |
@@ -431,7 +431,7 @@ programa.exe
 Considere um arquivo chamado `teste.bdg`:
 
 ```budega
-peleja inteirinho budega_principal() {
+peleja inteirinho abrir_budega() {
     um inteirinho de idade;
 
     berra("Diga tua idade: ");

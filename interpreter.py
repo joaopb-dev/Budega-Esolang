@@ -54,8 +54,8 @@ class TokenType(Enum):
     EM = auto()
 
     # Controle de fluxo
-    PASSA_RETO = auto()
-    ARREDA = auto()
+    ARROCHA = auto()
+    DESMANTELA = auto()
     DEVOLVE = auto()
 
     # Funções
@@ -139,8 +139,8 @@ class Lexer:
         'pra': TokenType.PRA,
         'pra_cada': TokenType.PRA_CADA,
         'em': TokenType.EM,
-        'passa_reto': TokenType.PASSA_RETO,
-        'arreda': TokenType.ARREDA,
+        'arrocha': TokenType.ARROCHA,
+        'desmantela': TokenType.DESMANTELA,
         'devolve': TokenType.DEVOLVE,
         'peleja': TokenType.PELEJA,
         'berra': TokenType.BERRA,
@@ -507,8 +507,8 @@ class Translator:
         # Nome da função
         func_name = self.expect(TokenType.IDENTIFIER).value
 
-        # Traduz budega_principal para main
-        if func_name == 'budega_principal':
+        # Traduz abrir_budega para main
+        if func_name == 'abrir_budega':
             func_name = 'main'
 
         # Parâmetros
@@ -655,12 +655,12 @@ class Translator:
                 self.translate_for_statement(indent)
 
             # Controle de fluxo
-            elif self.match(TokenType.PASSA_RETO):
+            elif self.match(TokenType.ARROCHA):
                 self.advance()
                 self.expect(TokenType.SEMICOLON)
                 self.output.append(indent_str + 'continue;')
 
-            elif self.match(TokenType.ARREDA):
+            elif self.match(TokenType.DESMANTELA):
                 self.advance()
                 self.expect(TokenType.SEMICOLON)
                 self.output.append(indent_str + 'break;')
@@ -795,7 +795,7 @@ class Translator:
                     if self.match(TokenType.UM, TokenType.UMA, TokenType.NUM_MEXE):
                         line = self.translate_variable_declaration()
                         self.output.append(indent_str + '        ' + line)
-                    elif self.match(TokenType.ARREDA):
+                    elif self.match(TokenType.DESMANTELA):
                         self.advance()
                         self.expect(TokenType.SEMICOLON)
                         self.output.append(indent_str + '        break;')
@@ -817,7 +817,7 @@ class Translator:
                     if self.match(TokenType.UM, TokenType.UMA, TokenType.NUM_MEXE):
                         line = self.translate_variable_declaration()
                         self.output.append(indent_str + '        ' + line)
-                    elif self.match(TokenType.ARREDA):
+                    elif self.match(TokenType.DESMANTELA):
                         self.advance()
                         self.expect(TokenType.SEMICOLON)
                         self.output.append(indent_str + '        break;')
