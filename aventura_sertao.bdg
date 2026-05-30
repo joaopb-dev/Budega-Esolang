@@ -1,0 +1,231 @@
+peleja nadinha linha() {
+    berra("--------------------------------------------------\n");
+}
+
+peleja nadinha fala(um garrancho de quem acolá, um garrancho de texto acolá) {
+    berra("%s: %s\n", quem, texto);
+}
+
+peleja nadinha vento_do_sertao() {
+    um inteirinho de sopro = 0;
+
+    berra("O vento levanta poeira");
+    faz_ai {
+        berra(".");
+        sopro = sopro + 1;
+    } arrudeia (sopro < 3);
+    berra("\n");
+}
+
+peleja nadinha mapa_do_sertao() {
+    num_mexe uma ruma de [4] garrancho de lugares acolá = {
+        "Budega de Dona Mocinha",
+        "Trilha dos Mandacarus",
+        "Acude Velho",
+        "Redemoinho do Meio-Dia"
+    };
+
+    uma ruma de [4] inteirinho de perigo = {1, 2, 2, 3};
+    linha();
+    berra("MAPA RISCADO NO CHAO\n");
+
+    pra (um inteirinho de j = 0; j < 4; j = j + 1) {
+        berra("%d) %s\n", j + 1, lugares[j]);
+    }
+
+    berra("Nivel dos aperreios: ");
+    pra_cada (um inteirinho de p em perigo) {
+        berra("[%d] ", p);
+    }
+    berra("\n");
+    linha();
+}
+
+peleja nadinha status_jogo(um inteirinho de pista, um inteirinho de rapadura, um inteirinho de coragem, um inteirinho de agua) {
+    berra("\nSTATUS -> pistas:%d | rapadura:%d | coragem:%d | agua:%d\n", pista, rapadura, coragem, agua);
+}
+
+peleja nadinha abertura() {
+    linha();
+    berra("A LENDA DO CHAPEU DE COURO\n");
+    linha();
+    fala("Narrador", "No meio do sertao, o sol rachava ate pensamento.");
+    fala("Vaqueiro Ze", "Perdi meu chapeu de couro. Sem ele, num atravesso a caatinga nao.");
+    fala("Voce", "Pois deixe comigo. Se essa budega existe, eu acho.");
+    vento_do_sertao();
+    mapa_do_sertao();
+}
+
+peleja nadinha final_bom() {
+    linha();
+    fala("Redemoinho", "Tu veio com pista, coragem e agrado. Pode levar o chapeu.");
+    fala("Vaqueiro Ze", "Valha! Hoje tem cafe torrado e historia pra contar.");
+    berra("FINAL BOM: voce salvou o dia e ainda virou assunto na feira.\n");
+    linha();
+}
+
+peleja nadinha final_fraco() {
+    linha();
+    fala("Redemoinho", "Tu chegou foi afoito demais. Volta quando souber prosear.");
+    berra("FINAL FRACO: o chapeu escapuliu no vento, mas a aventura continua.\n");
+    linha();
+}
+
+peleja inteirinho abrir_budega() {
+    um inteirinho de opcao = 0;
+    um inteirinho de fala_opcao = 0;
+    um inteirinho de pista = 0;
+    um inteirinho de rapadura = 0;
+    um inteirinho de coragem = 0;
+    um inteirinho de agua = 1;
+    um inteirinho de fim = 0;
+    um inteirinho de vitoria = 0;
+    um inteirinho de voltas = 0;
+    um inteirinho de tinha_rapadura = 0;
+
+    abertura();
+
+    arrudeia (fim == 0) {
+        status_jogo(pista, rapadura, coragem, agua);
+        berra("Escolha teu rumo:\n");
+        berra("1 - Prosear na budega\n");
+        berra("2 - Seguir a trilha dos mandacarus\n");
+        berra("3 - Investigar o acude velho\n");
+        berra("4 - Encarar o redemoinho\n");
+        berra("5 - Desistir e voltar pra rede\n");
+        berra("> ");
+        escuta("%d", opcao acolá);
+
+        escolhe_ai (opcao) {
+            causo 1:
+                {
+                    linha();
+                    fala("Dona Mocinha", "Chegue, meu filho. Quer comprar ou quer mexerico?");
+                    berra("1 - Perguntar pelo chapeu\n");
+                    berra("2 - Pedir uma rapadura de viagem\n");
+                    berra("3 - Contar uma piada ruim\n");
+                    berra("> ");
+                    escuta("%d", fala_opcao acolá);
+
+                    se_der (fala_opcao == 1) {
+                        fala("Dona Mocinha", "Vi um redemoinho levando coisa de couro pra banda do acude.");
+                        pista = 1;
+                    }
+
+                    se_der (fala_opcao == 2) {
+                        tinha_rapadura = rapadura;
+                        se_der (tinha_rapadura == 0) {
+                            fala("Dona Mocinha", "Leve essa rapadura. No sertao, ate bicho encantado gosta de doce.");
+                            rapadura = 1;
+                        }
+                        se_der (tinha_rapadura != 0) {
+                            fala("Dona Mocinha", "Mais rapadura? Ai ja vira comercio, meu fi.");
+                        }
+                    }
+
+                    se_der (fala_opcao == 3) {
+                        fala("Voce", "Sabe por que o bode atravessou a estrada? Pra arrudiar a conversa.");
+                        fala("Dona Mocinha", "Foi ruim, mas teve coragem.");
+                        coragem = coragem + 1;
+                    }
+                }
+                desmantela;
+
+            causo 2:
+                {
+                    linha();
+                    fala("Narrador", "Os mandacarus parecem apontar para algum segredo.");
+
+                    se_der (pista == 0) {
+                        fala("Voce", "Sem pista, todo espinho parece caminho.");
+                    }
+
+                    se_der (pista > 0) {
+                        fala("Voce", "Dona Mocinha falou do acude. A trilha confirma o rumo.");
+                        coragem = coragem + 1;
+                    }
+
+                    se_der (rapadura == 1) {
+                        fala("Calango", "Psiu. Me de um pedacinho e eu conto uma coisa.");
+                        fala("Voce", "Tome, bichinho sabido.");
+                        fala("Calango", "O redemoinho so respeita quem chega sem ganancia.");
+                        pista = 2;
+                    }
+
+                    se_der (rapadura == 0) {
+                        fala("Calango", "Sem agrado, sem segredo. Regra antiga da caatinga.");
+                    }
+                }
+                desmantela;
+
+            causo 3:
+                {
+                    linha();
+                    fala("Narrador", "O acude esta baixo, mas guarda marcas na lama.");
+                    berra("1 - Gritar dentro do poco\n");
+                    berra("2 - Observar a areia com calma\n");
+                    berra("3 - Cantar um aboio desafinado\n");
+                    berra("> ");
+                    escuta("%d", fala_opcao acolá);
+
+                    se_der (fala_opcao == 1) {
+                        fala("Eco", "...oco...oco...oco...");
+                        fala("Voce", "Num ajudou, mas assustou as muriçocas.");
+                        agua = 0;
+                    }
+
+                    se_der (fala_opcao == 2) {
+                        fala("Voce", "Tem marca circular na areia. O chapeu passou por aqui.");
+                        pista = 2;
+                    }
+
+                    se_der (fala_opcao == 3) {
+                        fala("Narrador", "O canto sai torto, mas o peito fica valente.");
+                        coragem = coragem + 1;
+                    }
+                }
+                desmantela;
+
+            causo 4:
+                {
+                    linha();
+                    fala("Narrador", "Voce chega ao redemoinho do meio-dia.");
+
+                    se_der ((pista >= 2 emenda rapadura == 1) mói coragem >= 2) {
+                        final_bom();
+                        vitoria = 1;
+                        fim = 1;
+                    }
+
+                    se_der (ai_dentro ((pista >= 2 emenda rapadura == 1) mói coragem >= 2)) {
+                        final_fraco();
+                        fim = 1;
+                    }
+                }
+                desmantela;
+
+            causo 5:
+                {
+                    fala("Voce", "A rede me chama mais alto que a aventura.");
+                    fim = 1;
+                }
+                desmantela;
+
+            se_num_tiver:
+                berra("Opcao arretada demais. Tente uma que exista.\n");
+        }
+
+        voltas = voltas + 1;
+
+        se_der (voltas >= 8 emenda fim == 0) {
+            fala("Narrador", "O sol subiu demais. A aventura vai acabar no mormaço.");
+            fim = 1;
+        }
+    }
+
+    se_der (vitoria == 0) {
+        berra("\nFIM: voce volta pra casa com poeira no pe e historia pela metade.\n");
+    }
+
+    devolve 0;
+}

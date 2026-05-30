@@ -1,0 +1,7 @@
+peleja inteirinho abrir_budega() {
+    num_mexe uma garrancho de mensagem acolá = "Hello, world!\n";
+
+    berra(mensagem);
+
+    devolve 0;
+}

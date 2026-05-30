@@ -1,0 +1,32 @@
+peleja inteirinho abrir_budega() {
+    num_mexe uma garrancho de verso_muitas_1 acolá = "%d garrafas de cerveja na parede, %d garrafas de cerveja.\n";
+    num_mexe uma garrancho de verso_tira acolá = "Tire uma, passe adiante,\n";
+    num_mexe uma garrancho de verso_muitas_2 acolá = "%d garrafas de cerveja na parede!\n\n";
+    num_mexe uma garrancho de verso_uma_1 acolá = "1 garrafa de cerveja na parede, 1 garrafa de cerveja.\n";
+    num_mexe uma garrancho de verso_nenhuma_1 acolá = "Nenhuma garrafa de cerveja na parede!\n\n";
+    num_mexe uma garrancho de verso_nenhuma_2 acolá = "Nenhuma garrafa de cerveja na parede, nenhuma garrafa de cerveja.\n";
+    num_mexe uma garrancho de verso_compra acolá = "Vá até a loja, compre mais algumas,\n";
+    num_mexe uma garrancho de verso_final acolá = "99 garrafas de cerveja na parede!\n";
+
+    pra (um inteirinho de i = 99; i >= 0; i = i - 1) {
+        se_der (i > 1) {
+            berra(verso_muitas_1, i, i);
+            berra(verso_tira);
+            berra(verso_muitas_2, i - 1);
+        }
+
+        se_der (i == 1) {
+            berra(verso_uma_1);
+            berra(verso_tira);
+            berra(verso_nenhuma_1);
+        }
+
+        se_der (i == 0) {
+            berra(verso_nenhuma_2);
+            berra(verso_compra);
+            berra(verso_final);
+        }
+    }
+
+    devolve 0;
+}
